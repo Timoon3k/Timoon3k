@@ -6,5 +6,5 @@
 - 👯 Szukam pracy w zakresie ...  Front-end Developera
 - 📫 Jak się ze mną skontaktować : ... Poprzez  Moją Stronę Internetową
 - ⚡ Śmieszny fakt : ... Zawszę kończę przed czasem 
-- Stack : HTML5, CSS3, SASS, BOOTSTRAP , JAVASCRIPT, REACT
+- Stack : HTML5, CSS3, SASS, JAVASCRIPT, REACT
 
