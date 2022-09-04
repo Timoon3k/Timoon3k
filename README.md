@@ -31,7 +31,7 @@
 
 - :zap: Szukam pracy w zakresie  Front-end Developera
 
-- :mailbox:Jak się ze mną skontaktować: [![Linkedin Badge](https://img.shields.io/badge/-TomaszMajewski-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/tomasz-majewski-30414b23a/ target="_blank")
+- :mailbox:Jak się ze mną skontaktować: [![Linkedin Badge](https://img.shields.io/badge/-TomaszMajewski-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/tomasz-majewski-30414b23a/)
 
 ---
 
