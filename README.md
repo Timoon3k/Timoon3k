@@ -1,11 +1,11 @@
 <div id="badges" align="center">
-  <a href="https://www.linkedin.com/in/tomasz-majewski-30414b23a/">
+  <a href="https://www.linkedin.com/in/tomasz-majewski-30414b23a/ target="_blank"">
     <img src="https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
   </a>
-  <a href="https://tomaszmajewski.netlify.app">
+  <a href="https://tomaszmajewski.netlify.app" target="_blank">
     <img src="https://img.shields.io/badge/Moje Portfolio-red?style=for-the-badge&logo=portfolio&logoColor=white" alt="Portfolio Badge"/>
   </a>
-  <a href="https://www.facebook.com/tomasz.majewski.33/">
+  <a href="https://www.facebook.com/tomasz.majewski.33/" target="_blank">
     <img src="https://img.shields.io/badge/Facebook-blue?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook Badge"/>
   </a>
   <img src="https://komarev.com/ghpvc/?username=Timoon3k&style=flat-square&color=blue" alt=""/>
@@ -31,7 +31,7 @@
 
 - :zap: Szukam pracy w zakresie  Front-end Developera
 
-- :mailbox:Jak się ze mną skontaktować: [![Linkedin Badge](https://img.shields.io/badge/-TomaszMajewski-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/tomasz-majewski-30414b23a/)
+- :mailbox:Jak się ze mną skontaktować: [![Linkedin Badge](https://img.shields.io/badge/-TomaszMajewski-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/tomasz-majewski-30414b23a/ target="_blank")
 
 ---
 
