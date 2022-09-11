@@ -27,7 +27,7 @@
 
 - :telescope: Obecnie pracuje przy  React Chat App
 
-- :seedling: Obecnie ucze się English>TypeScript>Vue/React
+- :seedling: Obecnie ucze się ``` Angielskiego>TypeScript>Vue/React ```
 
 - :zap: Szukam pracy w zakresie  Front-end Developera
 
