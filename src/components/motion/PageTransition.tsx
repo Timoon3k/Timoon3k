@@ -27,8 +27,8 @@ export default function PageTransition({ children }: { children: ReactNode }) {
     }
     if (prefersReducedMotion()) return;
 
-    window.scrollTo({ top: 0, behavior: 'auto' });
-
+    // Pozycją przewijania zarządza wyłącznie ScrollManager — dwa niezależne
+    // resety ścigałyby się ze sobą przy każdej zmianie trasy.
     let cleanup: (() => void) | undefined;
 
     void loadGsap().then(({ gsap }) => {

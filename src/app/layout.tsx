@@ -4,6 +4,8 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import MotionProvider from '@/components/motion/MotionProvider';
 import Interactions from '@/components/motion/Interactions';
+import ScrollManager from '@/components/motion/ScrollManager';
+import BackToTop from '@/components/ui/BackToTop';
 import PageTransition from '@/components/motion/PageTransition';
 import JsonLd from '@/components/seo/JsonLd';
 import { personSchema, professionalServiceSchema, websiteSchema } from '@/lib/seo';
@@ -71,6 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Przejdź do treści
         </a>
 
+        <ScrollManager />
         <Header />
 
         <main id="tresc">
@@ -78,6 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
 
         <Footer />
+        <BackToTop />
 
         <MotionProvider />
         <Interactions />
