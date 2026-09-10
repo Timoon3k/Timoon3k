@@ -1,0 +1,295 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   Design tokens — "Cosmic Digital Studio"
+   ========================================================================== */
+@theme {
+  /* Surfaces — deep void through graphite */
+  --color-void: #04060b;
+  --color-abyss: #070a12;
+  --color-graphite: #0c1019;
+  --color-slate: #141a26;
+  --color-elevated: #1a2130;
+
+  /* Ink */
+  --color-star: #eef2f8;
+  --color-dim: #9aa4b8;
+  --color-faint: #7f899d;
+
+  /* Accents */
+  --color-signal: #5ce1ff;
+  --color-signal-deep: #1b90bd;
+  --color-flare: #ff6b4a;
+
+  /* Lines */
+  --color-hairline: oklch(1 0 0 / 8%);
+  --color-hairline-strong: oklch(1 0 0 / 16%);
+
+  /* Typography */
+  --font-display: var(--font-bricolage), 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-manrope), 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-jb), 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Editorial type scale (fluid) */
+  --text-mega: clamp(2.75rem, 9vw, 8.5rem);
+  --text-mega--line-height: 0.86;
+  --text-mega--letter-spacing: -0.045em;
+
+  --text-giant: clamp(2.5rem, 7.2vw, 6.5rem);
+  --text-giant--line-height: 0.92;
+  --text-giant--letter-spacing: -0.035em;
+
+  --text-major: clamp(2rem, 4.6vw, 4rem);
+  --text-major--line-height: 1.02;
+  --text-major--letter-spacing: -0.03em;
+
+  --text-headline: clamp(1.5rem, 2.6vw, 2.25rem);
+  --text-headline--line-height: 1.12;
+  --text-headline--letter-spacing: -0.02em;
+
+  --text-lead: clamp(1.0625rem, 1.35vw, 1.375rem);
+  --text-lead--line-height: 1.55;
+
+  /* Rhythm */
+  --spacing-gutter: clamp(1.25rem, 4vw, 4.5rem);
+  --spacing-section: clamp(5.5rem, 11vw, 11rem);
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+
+  --radius-card: 2px;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+@layer base {
+  :root {
+    color-scheme: dark;
+    --header-h: 4.5rem;
+  }
+
+  * {
+    min-width: 0;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-h) + 1.5rem);
+  }
+
+  body {
+    background-color: var(--color-void);
+    color: var(--color-star);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-signal);
+    color: var(--color-void);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  /* Images never cause layout shift */
+  img, svg, video, canvas {
+    display: block;
+    max-width: 100%;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-void);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-slate);
+    border: 3px solid var(--color-void);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-elevated);
+  }
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+@utility container-page {
+  width: 100%;
+  max-width: 96rem;
+  margin-inline: auto;
+  padding-inline: var(--spacing-gutter);
+}
+
+@utility container-prose {
+  width: 100%;
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+/* Vertical hairline grid used as a compositional device */
+@utility rule-top {
+  border-top: 1px solid var(--color-hairline);
+}
+
+/**
+ * Delikatny gradient nagłówków.
+ *
+ * Celowo `background-image`, a nie skrót `background` — kompilator CSS emituje
+ * dla kolorów w przestrzeni lab() nadpisanie w `@supports`, a skrót zresetowałby
+ * przy okazji `background-clip` do wartości domyślnej.
+ */
+@utility text-gradient-star {
+  --text-gradient: linear-gradient(180deg, var(--color-star) 0%, oklch(0.72 0.03 250) 100%);
+  background-image: var(--text-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Eyebrow / kicker label */
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Components
+   ========================================================================== */
+@layer components {
+  /* Grain overlay — adds analogue depth to flat dark surfaces */
+  .grain::after {
+    content: '';
+    position: fixed;
+    inset: -50%;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.028;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    will-change: transform;
+    animation: grain-shift 8s steps(6) infinite;
+  }
+
+  @keyframes grain-shift {
+    0%, 100% { transform: translate(0, 0); }
+    16% { transform: translate(-2%, 1%); }
+    33% { transform: translate(1%, -2%); }
+    50% { transform: translate(-1%, 2%); }
+    66% { transform: translate(2%, 1%); }
+    83% { transform: translate(1%, -1%); }
+  }
+
+  @keyframes scene-in {
+    to { opacity: 1; }
+  }
+
+  .marquee__track {
+    animation: marquee 42s linear infinite;
+  }
+
+  .marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    to { transform: translateX(-100%); }
+  }
+
+  /* Text reveal primitive driven by GSAP; safe default = visible */
+  .js-ready [data-split] {
+    opacity: 0;
+  }
+
+  .split-line {
+    will-change: transform;
+  }
+
+  /*
+   * SplitText przenosi tekst do elementów linii owiniętych dodatkowym maskiem.
+   * Gradient przekazujemy zmienną własną (dziedziczy się przez całe poddrzewo),
+   * bo `inherit` sięgnęłoby tylko do maski, która tła nie ma.
+   */
+  .text-gradient-star .split-line {
+    background-image: var(--text-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .js-ready [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 1.15rem, 0);
+  }
+
+  .js-ready [data-reveal-line] > span {
+    display: block;
+    transform: translate3d(0, 105%, 0);
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: left 100%;
+    transition: background-size 0.45s var(--ease-out-expo);
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+/* ==========================================================================
+   Reduced motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .grain::after {
+    animation: none;
+  }
+  .js-ready [data-reveal],
+  .js-ready [data-split],
+  .js-ready [data-reveal-line] > span {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

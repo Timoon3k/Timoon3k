@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1400" width="800" height="1400" role="img">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#070a12"/>
+      <stop offset="1" stop-color="#04060b"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.78" cy="0.16" r="0.7">
+      <stop offset="0" stop-color="#E0A458" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#E0A458" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#8fa3bf" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="1400" fill="url(#bg)"/>
+  <rect width="800" height="1400" fill="url(#grid)"/>
+  <rect width="800" height="1400" fill="url(#glow)"/>
+  <ellipse cx="656" cy="168" rx="272" ry="280" fill="none" stroke="#E0A458" stroke-opacity="0.16"/>
+  <ellipse cx="656" cy="168" rx="176" ry="182" fill="none" stroke="#E0A458" stroke-opacity="0.1"/>
+  <rect x="48" y="98" width="113" height="10" rx="2" fill="#E0A458" opacity="0.85"/><rect x="400" y="105" width="56" height="7" rx="2" fill="#94a3b8" opacity="0.34"/><rect x="484" y="105" width="56" height="7" rx="2" fill="#94a3b8" opacity="0.34"/><rect x="568" y="105" width="56" height="7" rx="2" fill="#94a3b8" opacity="0.34"/><rect x="652" y="105" width="56" height="7" rx="2" fill="#94a3b8" opacity="0.34"/><rect x="48" y="266" width="521" height="34" rx="3" fill="#e2e8f0" opacity="0.9"/><rect x="48" y="314" width="366" height="34" rx="3" fill="#e2e8f0" opacity="0.55"/><rect x="48" y="378" width="253" height="9" rx="2" fill="#94a3b8" opacity="0.4"/><rect x="48" y="396" width="211" height="9" rx="2" fill="#94a3b8" opacity="0.28"/><rect x="48" y="434" width="134" height="38" rx="2" fill="#E0A458"/><rect x="48" y="868" width="408" height="364" rx="3" fill="#0d1220" stroke="#1c2431"/><rect x="68" y="892" width="51" height="22" rx="2" fill="#E0A458" opacity="0.85"/><rect x="129" y="892" width="51" height="22" rx="2" fill="#94a3b8" opacity="0.16"/><rect x="190" y="892" width="51" height="22" rx="2" fill="#94a3b8" opacity="0.16"/><rect x="251" y="892" width="51" height="22" rx="2" fill="#94a3b8" opacity="0.16"/><rect x="312" y="892" width="51" height="22" rx="2" fill="#94a3b8" opacity="0.16"/><rect x="373" y="892" width="51" height="22" rx="2" fill="#E0A458" opacity="0.85"/><rect x="68" y="926" width="51" height="22" rx="2" fill="#94a3b8" opacity="0.16"/><rect x="129" y="926" width="51" height="22" rx="2" fill="#94a3b8" opacity="0.16"/><rect x="190" y="926" width="51" height="22" rx="2" fill="#94a3b8" opacity="0.16"/><rect x="251" y="926" width="51" height="22" rx="2" fill="#94a3b8" opacity="0.16"/><rect x="312" y="926" width="51" height="22" rx="2" fill="#E0A458" opacity="0.85"/><rect x="373" y="926" width="51" height="22" rx="2" fill="#94a3b8" opacity="0.16"/><rect x="68" y="960" width="51" height="22" rx="2" fill="#94a3b8" opacity="0.16"/><rect x="129" y="960" width="51" height="22" rx="2" fill="#94a3b8" opacity="0.16"/><rect x="190" y="960" width="51" height="22" rx="2" fill="#94a3b8" opacity="0.16"/><rect x="251" y="960" width="51" height="22" rx="2" fill="#E0A458" opacity="0.85"/><rect x="312" y="960" width="51" height="22" rx="2" fill="#94a3b8" opacity="0.16"/><rect x="373" y="960" width="51" height="22" rx="2" fill="#94a3b8" opacity="0.16"/><rect x="476" y="868" width="276" height="364" rx="3" fill="#0d1220" stroke="#1c2431"/><rect x="500" y="896" width="228" height="12" rx="2" fill="#94a3b8" opacity="0.35"/><rect x="500" y="920" width="160" height="12" rx="2" fill="#94a3b8" opacity="0.22"/><rect x="500" y="964" width="125" height="30" rx="2" fill="#E0A458"/>
+  <text x="48" y="1366" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" letter-spacing="2.4" fill="#8fa3bf" fill-opacity="0.75">MSDREAM.PL</text>
+  <text x="752" y="1366" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" letter-spacing="2.4" fill="#E0A458" fill-opacity="0.8">MOBILE</text>
+  <title>MS Dream — msdream.pl</title>
+</svg>
