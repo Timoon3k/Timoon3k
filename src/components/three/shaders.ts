@@ -1,7 +1,8 @@
 /**
- * Szumy 3D (Ashima / Stefan Gustavson, licencja MIT) — używane do deformacji
- * geometrii centralnego obiektu. Kod celowo trzymany w jednym miejscu,
- * żeby nie duplikować go między materiałami.
+ * Shadery sceny sygnaturowej „Digital Core”.
+ *
+ * Szum simplex 3D (Ashima / Stefan Gustavson, MIT) trzymany w jednym miejscu —
+ * używają go zarówno rdzeń, jak i powłoka punktowa.
  */
 const simplexNoise = /* glsl */ `
 vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -71,7 +72,7 @@ float snoise(vec3 v) {
 `;
 
 /* -------------------------------------------------------------------------- */
-/* Rdzeń — deformowana „cyfrowa planeta”                                      */
+/* Rdzeń — deformowana bryła z rimem fresnela                                 */
 /* -------------------------------------------------------------------------- */
 
 export const coreVertexShader = /* glsl */ `
@@ -84,28 +85,31 @@ uniform float uScroll;
 
 varying vec3 vNormal;
 varying vec3 vViewPosition;
+varying vec3 vLocalPosition;
 varying float vDisplacement;
 
+/** Deformacja liczona raz — używana też do przybliżenia normalnej. */
+float fieldAt(vec3 p) {
+  float base = snoise(p * uFrequency + vec3(0.0, uTime * 0.14, uTime * 0.07));
+  float detail = snoise(p * (uFrequency * 2.4) - uTime * 0.09) * 0.32;
+  return (base + detail) * uAmplitude;
+}
+
 void main() {
-  vec3 pos = position;
+  float displacement = fieldAt(position) * (1.0 + uScroll * 0.35);
+  vec3 pos = position + normal * displacement;
 
-  float noise = snoise(pos * uFrequency + vec3(0.0, uTime * 0.16, uTime * 0.08));
-  float ridge = snoise(pos * (uFrequency * 2.7) - uTime * 0.1) * 0.35;
-  float displacement = (noise + ridge) * uAmplitude * (1.0 + uScroll * 0.5);
-
-  pos += normal * displacement;
   vDisplacement = displacement;
+  vLocalPosition = pos;
 
-  // Normalna przybliżona różnicowo — wystarczająco dokładna dla rimu,
-  // a znacznie tańsza niż liczenie stycznych.
-  float eps = 0.035;
-  vec3 tangent = normalize(cross(normal, vec3(0.0, 1.0, 0.0) + 0.001));
+  // Normalna przybliżona różnicowo — tańsza niż liczenie stycznych,
+  // a dla miękkiego rimu wystarczająco dokładna.
+  float eps = 0.04;
+  vec3 tangent = normalize(cross(normal, vec3(0.0, 1.0, 0.001)));
   vec3 bitangent = normalize(cross(normal, tangent));
-  float nA = snoise((position + tangent * eps) * uFrequency + vec3(0.0, uTime * 0.16, uTime * 0.08));
-  float nB = snoise((position + bitangent * eps) * uFrequency + vec3(0.0, uTime * 0.16, uTime * 0.08));
-  vec3 perturbed = normalize(
-    normal - (tangent * (nA - noise) + bitangent * (nB - noise)) * uAmplitude * 12.0
-  );
+  float dTangent = fieldAt(position + tangent * eps) - displacement;
+  float dBitangent = fieldAt(position + bitangent * eps) - displacement;
+  vec3 perturbed = normalize(normal - (tangent * dTangent + bitangent * dBitangent) * 9.0);
 
   vNormal = normalize(normalMatrix * perturbed);
 
@@ -116,42 +120,94 @@ void main() {
 `;
 
 export const coreFragmentShader = /* glsl */ `
-uniform vec3 uColorCore;
+uniform vec3 uColorDeep;
 uniform vec3 uColorRim;
-uniform vec3 uColorFlare;
 uniform float uTime;
+uniform float uOpacity;
 
 varying vec3 vNormal;
 varying vec3 vViewPosition;
+varying vec3 vLocalPosition;
 varying float vDisplacement;
 
 void main() {
   vec3 normal = normalize(vNormal);
   vec3 viewDir = normalize(vViewPosition);
 
-  float fresnel = pow(1.0 - clamp(dot(normal, viewDir), 0.0, 1.0), 2.6);
+  float facing = clamp(dot(normal, viewDir), 0.0, 1.0);
+  float fresnel = pow(1.0 - facing, 3.0);
 
-  // Kierunkowe „światło gwiazdy” z lewej góry.
-  float key = clamp(dot(normal, normalize(vec3(-0.55, 0.75, 0.45))), 0.0, 1.0);
+  // Kierunkowe światło gwiazdy z lewej góry — buduje bryłę, nie oświetla całości.
+  float key = clamp(dot(normal, normalize(vec3(-0.5, 0.8, 0.4))), 0.0, 1.0);
 
-  // Cienkie prążki podkreślające deformację — struktura „cyfrowa”, nie organiczna.
-  float bands = smoothstep(0.42, 0.5, abs(fract(vDisplacement * 16.0 - uTime * 0.12) - 0.5));
+  // Zagłębienia ciemnieją, grzbiety łapią akcent — czyta się jako struktura,
+  // a nie jako równomierna poświata.
+  float ridge = smoothstep(-0.06, 0.09, vDisplacement);
 
-  vec3 color = uColorCore;
-  color = mix(color, uColorRim, fresnel * 0.92);
-  color += uColorRim * key * 0.14;
-  color += uColorFlare * bands * fresnel * 0.35;
+  vec3 color = uColorDeep;
+  color += uColorRim * fresnel * 0.85;
+  color += uColorRim * key * ridge * 0.16;
 
-  float alpha = 0.55 + fresnel * 0.45;
+  // Bardzo powolne przejście skanujące w pionie — ledwie zauważalne.
+  float scan = smoothstep(0.985, 1.0, sin(vLocalPosition.y * 2.2 - uTime * 0.35) * 0.5 + 0.5);
+  color += uColorRim * scan * 0.10;
+
+  // Delikatna emisja od strony obserwatora — bez niej środek czyta się jak dziura,
+  // a nie jak świecący rdzeń.
+  color += uColorRim * pow(facing, 3.0) * 0.07;
+
+  float alpha = (0.30 + fresnel * 0.70 + pow(facing, 4.0) * 0.16) * uOpacity;
   gl_FragColor = vec4(color, alpha);
 }
 `;
 
 /* -------------------------------------------------------------------------- */
-/* Cząsteczki na orbitach                                                     */
+/* Powłoka punktowa — „siatka” otaczająca rdzeń                               */
 /* -------------------------------------------------------------------------- */
 
-export const particlesVertexShader = /* glsl */ `
+export const shellVertexShader = /* glsl */ `
+uniform float uTime;
+uniform float uSize;
+uniform float uPixelRatio;
+uniform float uScroll;
+
+attribute float aSeed;
+
+varying float vFade;
+
+void main() {
+  // Powłoka oddycha i lekko rozsuwa się przy przewijaniu — warstwy się rozdzielają.
+  float breathe = 1.0 + sin(uTime * 0.32 + aSeed * 6.283) * 0.012 + uScroll * 0.16;
+  vec3 pos = position * breathe;
+
+  vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+  gl_Position = projectionMatrix * mvPosition;
+  gl_PointSize = uSize * uPixelRatio * (1.0 / -mvPosition.z);
+
+  // Punkty od strony obserwatora są jaśniejsze — daje wrażenie głębi.
+  vFade = smoothstep(-2.0, 2.0, -mvPosition.z * -1.0) * 0.6 + 0.4;
+}
+`;
+
+export const shellFragmentShader = /* glsl */ `
+uniform vec3 uColor;
+uniform float uOpacity;
+
+varying float vFade;
+
+void main() {
+  float d = length(gl_PointCoord - 0.5);
+  if (d > 0.5) discard;
+  float falloff = smoothstep(0.5, 0.1, d);
+  gl_FragColor = vec4(uColor, falloff * vFade * uOpacity);
+}
+`;
+
+/* -------------------------------------------------------------------------- */
+/* Konstelacja — węzły danych na orbitach                                     */
+/* -------------------------------------------------------------------------- */
+
+export const nodesVertexShader = /* glsl */ `
 uniform float uTime;
 uniform float uSize;
 uniform float uPixelRatio;
@@ -169,24 +225,26 @@ void main() {
   float c = cos(angle);
   float s = sin(angle);
   pos.xz = mat2(c, -s, s, c) * pos.xz;
-  pos.y += sin(uTime * 0.5 + aPhase) * 0.045;
+  pos.y += sin(uTime * 0.42 + aPhase) * 0.05;
 
   vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
   gl_Position = projectionMatrix * mvPosition;
   gl_PointSize = uSize * aScale * uPixelRatio * (1.0 / -mvPosition.z);
 
-  vAlpha = clamp(0.25 + aScale * 0.75, 0.0, 1.0);
+  // Pulsowanie rozjeżdżone fazą — węzły „mrugają” niezależnie od siebie.
+  vAlpha = (0.35 + 0.65 * (sin(uTime * 0.9 + aPhase * 2.0) * 0.5 + 0.5)) * aScale;
 }
 `;
 
-export const particlesFragmentShader = /* glsl */ `
+export const nodesFragmentShader = /* glsl */ `
 uniform vec3 uColor;
+
 varying float vAlpha;
 
 void main() {
   float d = length(gl_PointCoord - 0.5);
   if (d > 0.5) discard;
-  float falloff = smoothstep(0.5, 0.0, d);
-  gl_FragColor = vec4(uColor, falloff * vAlpha);
+  float core = smoothstep(0.5, 0.0, d);
+  gl_FragColor = vec4(uColor, core * vAlpha);
 }
 `;

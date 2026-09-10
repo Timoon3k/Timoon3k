@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import ProjectRow from '@/components/portfolio/ProjectRow';
+import CinematicWork from '@/components/home/CinematicWork';
 import { Eyebrow } from '@/components/ui/Section';
 import type { Project } from '@/lib/types';
 
@@ -16,18 +16,15 @@ export default function SelectedWork({ projects }: { projects: Project[] }) {
           </div>
           <Link
             href="/portfolio"
+            data-magnetic
             className="link-underline font-mono text-[0.6875rem] tracking-[0.14em] text-dim uppercase transition-colors hover:text-signal"
           >
             Całe portfolio ({projects.length})
           </Link>
         </div>
 
-        <div className="mt-14">
-          {projects.map((project, index) => (
-            // Realizacje leżą daleko poniżej pierwszego ekranu — każda okładka
-            // ładuje się leniwie, żeby nie rywalizowała o pasmo z treścią hero.
-            <ProjectRow key={project.slug} project={project} index={index} />
-          ))}
+        <div className="mt-16 lg:mt-24">
+          <CinematicWork projects={projects} />
         </div>
       </div>
     </section>

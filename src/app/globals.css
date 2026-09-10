@@ -31,7 +31,7 @@
   --font-mono: var(--font-mono-jb), 'JetBrains Mono', ui-monospace, monospace;
 
   /* Editorial type scale (fluid) */
-  --text-mega: clamp(2.75rem, 9vw, 8.5rem);
+  --text-mega: clamp(2.6rem, 7.6vw, 7.25rem);
   --text-mega--line-height: 0.86;
   --text-mega--letter-spacing: -0.045em;
 
@@ -222,6 +222,48 @@
 
   @keyframes marquee {
     to { transform: translateX(-100%); }
+  }
+
+  /* ---------- Kursor ---------- */
+  /*
+   * Mały, precyzyjny punkt — nie wielkie kółko wleczone z opóźnieniem.
+   * Systemowy kursor chowamy dopiero, gdy własny naprawdę działa: klasę
+   * `has-cursor` ustawia skrypt po podpięciu nasłuchiwania.
+   */
+  .cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9998;
+    width: 7px;
+    height: 7px;
+    margin: -3.5px 0 0 -3.5px;
+    border-radius: 50%;
+    background: var(--color-signal);
+    pointer-events: none;
+    mix-blend-mode: screen;
+    transition: width 0.28s var(--ease-out-expo), height 0.28s var(--ease-out-expo),
+      margin 0.28s var(--ease-out-expo), background-color 0.28s ease, opacity 0.2s ease;
+  }
+
+  .cursor-dot.is-active {
+    width: 34px;
+    height: 34px;
+    margin: -17px 0 0 -17px;
+    background: color-mix(in oklab, var(--color-signal) 22%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-signal) 55%, transparent);
+  }
+
+  .has-cursor,
+  .has-cursor a,
+  .has-cursor button,
+  .has-cursor summary {
+    cursor: none;
+  }
+
+  /* Klawiatura ma pierwszeństwo: przy nawigacji tabem wracamy do systemowego. */
+  .has-cursor :focus-visible {
+    cursor: auto;
   }
 
   /* Text reveal primitive driven by GSAP; safe default = visible */

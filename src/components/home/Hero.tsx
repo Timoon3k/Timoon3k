@@ -1,92 +1,113 @@
 import HeroCanvas from '@/components/three/HeroCanvas';
 import { CtaLink } from '@/components/ui/Cta';
 
-const facts = [
-  { label: 'Wycena', value: 'w 24 godziny' },
+/**
+ * Kompetencje rozmieszczone radialnie wokół rdzenia — czytane jako satelity
+ * obiektu, nie jako lista. Warstwa dekoracyjna: te same informacje występują
+ * w treści niżej, więc dla czytnika ekranu są pominięte.
+ */
+const orbitLabels = [
+  { text: 'Interfejs', className: 'top-[16%] left-[52%]' },
+  { text: 'Kod', className: 'top-[30%] right-[8%]' },
+  { text: 'Wydajność', className: 'bottom-[34%] right-[11%]' },
+  { text: 'SEO', className: 'bottom-[20%] left-[58%]' },
+];
+
+const meta = [
+  { label: 'Wycena', value: 'w 24 h' },
   { label: 'Realizacja', value: 'od 7 dni' },
-  { label: 'Obszar', value: 'Wołomin · Warszawa · zdalnie' },
+  { label: 'Obszar', value: 'Wołomin · Warszawa' },
 ];
 
 export default function Hero() {
   return (
-    <section className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden pt-[calc(var(--header-h)+3rem)] pb-10">
-      {/*
-        Warstwa dekoracyjna — poza drzewem dostępności, doładowywana po pierwszym
-        renderze. Na telefonie scena schodzi do dolnej części ekranu, żeby nie
-        wchodziła pod nagłówek; na desktopie przesuwa się w prawą kolumnę.
-      */}
-      <div className="absolute inset-x-0 top-[42%] bottom-0 opacity-45 md:inset-y-0 md:left-[26%] md:opacity-100">
+    <section className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden pt-[calc(var(--header-h)+2rem)] pb-8">
+      {/* Warstwa 0 — scena. Doładowywana po pierwszym renderze, poza drzewem dostępności. */}
+      <div className="absolute inset-x-0 top-[34%] bottom-0 opacity-50 md:inset-y-0 md:left-0 md:opacity-100">
         <HeroCanvas />
       </div>
+
+      {/* Scrim: czyta się jak głębia sceny, a jednocześnie ratuje kontrast typografii */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,var(--color-void)_30%,rgba(4,6,11,0.82)_58%,rgba(4,6,11,0.55)_82%)] md:bg-[linear-gradient(100deg,var(--color-void)_16%,rgba(4,6,11,0.88)_44%,rgba(4,6,11,0.35)_66%,transparent_84%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_45%,transparent_20%,rgba(4,6,11,0.62)_58%,var(--color-void)_88%)]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-52 bg-[linear-gradient(to_top,var(--color-void)_35%,transparent)]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,var(--color-void)_2%,transparent_22%,transparent_72%,var(--color-void)_97%)]"
       />
 
-      <div className="relative container-page">
-        <p
-          data-reveal
-          data-delay="0.05"
-          className="eyebrow flex flex-wrap items-center gap-x-3 gap-y-2"
-        >
-          <span aria-hidden className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full rounded-full bg-signal opacity-70" />
+      {/* Satelity kompetencji — tylko tam, gdzie jest na nie miejsce */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 hidden lg:block">
+        {orbitLabels.map((label, index) => (
+          <span
+            key={label.text}
+            data-reveal
+            data-delay={0.9 + index * 0.12}
+            className={`absolute font-mono text-[0.625rem] tracking-[0.22em] text-star/35 uppercase ${label.className}`}
+          >
+            <span className="mr-2 inline-block h-1 w-1 translate-y-[-2px] rounded-full bg-signal/60" />
+            {label.text}
           </span>
+        ))}
+      </div>
+
+      {/* Warstwa 1 — treść. Typografia świadomie przecina rdzeń. */}
+      <div className="relative container-page">
+        <p data-reveal data-delay="0.05" className="eyebrow flex flex-wrap items-center gap-x-3 gap-y-2">
+          <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-signal" />
           Freelance web development — Wołomin, Warszawa
         </p>
 
-        {/* Element LCP: czysty tekst, renderowany po stronie serwera */}
+        {/* Element LCP: czysty tekst renderowany po stronie serwera */}
         <h1
           data-split="immediate"
           data-delay="0.1"
-          className="mt-7 max-w-[16ch] text-mega font-semibold text-gradient-star"
+          className="mt-7 max-w-[13ch] text-mega font-semibold text-gradient-star"
         >
           Projektuję strony, które trudno zignorować
         </h1>
+      </div>
 
-        <div className="mt-10 max-w-xl md:mt-12">
-          <p data-reveal data-delay="0.15" className="text-lead text-dim">
-            Nazywam się Tomasz Majewski. Projektuję i koduję nowoczesne strony internetowe dla firm —
-            od wizytówek lokalnego biznesu po sklepy i systemy rezerwacji. Szybkie, dopracowane
-            wizualnie i zbudowane pod konkretny cel sprzedażowy.
-          </p>
+      <div className="relative container-page">
+        <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-5">
+            <p data-reveal data-delay="0.18" className="max-w-md text-lead text-dim">
+              Tomasz Majewski. Projektuję i koduję strony dla firm — od wizytówek lokalnego
+              biznesu po sklepy i systemy rezerwacji.
+            </p>
 
-          <div
-            data-reveal
-            data-delay="0.2"
-            className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
-          >
-            <CtaLink href="/kontakt#formularz" className="justify-between sm:justify-center">
-              Rozpocznij projekt
-            </CtaLink>
-            <CtaLink
-              href="/portfolio"
-              variant="secondary"
-              className="justify-between sm:justify-center"
-            >
-              Zobacz realizacje
-            </CtaLink>
-          </div>
-        </div>
-
-        <dl
-          data-reveal-group
-          data-stagger="0.1"
-          className="mt-12 grid grid-cols-1 gap-px overflow-hidden border-t border-hairline sm:grid-cols-3 md:mt-14"
-        >
-          {facts.map((fact) => (
-            <div key={fact.label} data-reveal className="py-5 sm:pr-8">
-              <dt className="eyebrow">{fact.label}</dt>
-              <dd className="mt-2 font-display text-[1.0625rem] font-medium tracking-tight text-star">
-                {fact.value}
-              </dd>
+            <div data-reveal data-delay="0.24" className="mt-7 flex flex-col gap-3 sm:flex-row sm:gap-4">
+              <CtaLink href="/kontakt#formularz" data-magnetic className="justify-between sm:justify-center">
+                Rozpocznij projekt
+              </CtaLink>
+              <CtaLink
+                href="/portfolio"
+                variant="secondary"
+                data-magnetic
+                className="justify-between sm:justify-center"
+              >
+                Zobacz realizacje
+              </CtaLink>
             </div>
-          ))}
-        </dl>
+          </div>
+
+          <dl
+            data-reveal-group
+            data-stagger="0.08"
+            data-delay="0.3"
+            className="grid grid-cols-1 gap-x-8 gap-y-4 border-t border-hairline pt-6 sm:grid-cols-3 lg:col-span-6 lg:col-start-7 lg:border-t-0 lg:pt-0"
+          >
+            {meta.map((item) => (
+              <div key={item.label} data-reveal className="lg:text-right">
+                <dt className="eyebrow">{item.label}</dt>
+                <dd className="mt-1.5 font-display text-[1.0625rem] font-medium tracking-tight text-star">
+                  {item.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </div>
     </section>
   );

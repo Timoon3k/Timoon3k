@@ -3,11 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import SceneFallback from '@/components/three/SceneFallback';
-import {
-  isLowPowerDevice,
-  prefersReducedMotion,
-} from '@/lib/animation/prefers-reduced-motion';
-import type { Quality } from '@/components/three/Observatory';
+import { prefersReducedMotion } from '@/lib/animation/prefers-reduced-motion';
+import { detectQuality, type Quality } from '@/lib/animation/quality';
 
 /** Cała paczka WebGL ładuje się dopiero po pierwszym renderze — nigdy nie jest LCP. */
 const Scene = dynamic(() => import('@/components/three/Scene'), { ssr: false });
@@ -41,7 +38,7 @@ export default function HeroCanvas({ accent = '#5ce1ff' }: { accent?: string }) 
       }), 260));
 
     const handle = schedule(() => {
-      setQuality(isLowPowerDevice() ? 'low' : 'high');
+      setQuality(detectQuality());
       setEnabled(true);
     }, { timeout: 1800 });
 

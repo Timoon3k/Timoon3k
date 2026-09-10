@@ -55,8 +55,16 @@ export default function MotionProvider() {
        * Podpinanie ich pod ScrollTrigger oznaczałoby, że przy braku
        * przewijania nigdy się nie pokażą.
        */
+      /*
+       * Progi celowo zachodzą na siebie: wszystko, co mieści się w pierwszym
+       * ekranie, animujemy od razu, a ScrollTrigger zaczyna wcześniej (92%).
+       * Przy rozłącznych progach element tuż nad krawędzią ekranu wpadał
+       * w martwą strefę — nie kwalifikował się do animacji natychmiastowej
+       * i nigdy nie osiągał progu przewijania, więc bez scrolla zostawał
+       * niewidoczny. Dotyczyło to m.in. przycisków CTA w hero.
+       */
       const inFirstViewport = (el: Element) =>
-        el.getBoundingClientRect().top < window.innerHeight * 0.92;
+        el.getBoundingClientRect().top < window.innerHeight;
 
       /**
        * Na wolnym łączu warstwa animacji bywa gotowa dopiero po kilku sekundach.
@@ -86,7 +94,7 @@ export default function MotionProvider() {
             duration: 1.05,
             ease: 'power4.out',
             stagger: 0.075,
-            ...(immediate ? {} : { scrollTrigger: { trigger: el, start: 'top 88%', once: true } }),
+            ...(immediate ? {} : { scrollTrigger: { trigger: el, start: 'top 92%', once: true } }),
             delay: immediate ? Number(el.dataset.delay ?? 0.15) : 0,
           });
         });
@@ -106,7 +114,7 @@ export default function MotionProvider() {
             y: 0,
             duration: 0.95,
             delay: Number(el.dataset.delay ?? 0),
-            ...(immediate ? {} : { scrollTrigger: { trigger: el, start: 'top 90%', once: true } }),
+            ...(immediate ? {} : { scrollTrigger: { trigger: el, start: 'top 92%', once: true } }),
           });
         });
 
@@ -129,7 +137,7 @@ export default function MotionProvider() {
             stagger: Number(group.dataset.stagger ?? 0.08),
             ...(immediate
               ? {}
-              : { scrollTrigger: { trigger: group, start: 'top 88%', once: true } }),
+              : { scrollTrigger: { trigger: group, start: 'top 92%', once: true } }),
           });
         });
 

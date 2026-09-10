@@ -117,9 +117,11 @@ export default async function CaseStudyPage({ params }: Params) {
         </div>
       </header>
 
-      {/* Duży wizual otwierający */}
-      <div className="container-page">
-        <BrowserFrame image={project.cover} domain={project.domain} priority />
+      {/* Wizual otwierający wychodzi poza kontener — case study zaczyna się obrazem */}
+      <div className="relative">
+        <div className="mx-auto w-full max-w-[110rem] px-gutter">
+          <BrowserFrame image={project.cover} domain={project.domain} priority />
+        </div>
       </div>
 
       {/* Kontekst */}
@@ -130,7 +132,7 @@ export default async function CaseStudyPage({ params }: Params) {
           </div>
           <p
             data-split
-            className="font-display text-[clamp(1.375rem,2.6vw,2.125rem)] leading-[1.28] font-medium tracking-tight text-star md:col-span-8 lg:col-span-9"
+            className="font-display text-[clamp(1.5rem,3.2vw,2.75rem)] leading-[1.22] font-medium tracking-tight text-gradient-star md:col-span-8 lg:col-span-9"
           >
             {project.context}
           </p>
@@ -227,13 +229,15 @@ export default async function CaseStudyPage({ params }: Params) {
           <div className="md:col-span-7">
             <Eyebrow>Rezultat</Eyebrow>
             <ul data-reveal-group className="mt-9 space-y-5">
-              {project.outcome.map((item) => (
-                <li key={item} data-reveal className="flex gap-4 border-b border-hairline pb-5">
+              {project.outcome.map((item, index) => (
+                <li key={item} data-reveal className="flex gap-6 border-b border-hairline pb-5">
                   <span
                     aria-hidden
-                    className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full"
-                    style={{ background: 'var(--project-accent)' }}
-                  />
+                    className="mt-2 font-mono text-[0.6875rem] tracking-[0.14em]"
+                    style={{ color: 'var(--project-accent)' }}
+                  >
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
                   <span className="text-lead leading-relaxed text-dim">{item}</span>
                 </li>
               ))}

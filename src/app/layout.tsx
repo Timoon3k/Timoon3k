@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, JetBrains_Mono, Manrope } from 'next/font/google';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import MotionProvider from '@/components/motion/MotionProvider';
+import Interactions from '@/components/motion/Interactions';
 import PageTransition from '@/components/motion/PageTransition';
 import JsonLd from '@/components/seo/JsonLd';
 import { personSchema, professionalServiceSchema, websiteSchema } from '@/lib/seo';
@@ -79,6 +80,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
 
         <MotionProvider />
+        <Interactions />
         <JsonLd data={[websiteSchema, personSchema, professionalServiceSchema]} />
       </body>
     </html>
