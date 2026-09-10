@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import SceneFallback from '@/components/three/SceneFallback';
 import { prefersReducedMotion } from '@/lib/animation/prefers-reduced-motion';
-import { detectQuality, type Quality } from '@/lib/animation/quality';
+import { detectQuality, shouldRenderScene, type Quality } from '@/lib/animation/quality';
 
 /** Cała paczka WebGL ładuje się dopiero po pierwszym renderze — nigdy nie jest LCP. */
 const Scene = dynamic(() => import('@/components/three/Scene'), { ssr: false });
@@ -27,24 +27,42 @@ export default function HeroCanvas({ accent = '#5ce1ff' }: { accent?: string }) 
   const [quality, setQuality] = useState<Quality>('high');
   const [active, setActive] = useState(true);
 
-  /* Decyzja o włączeniu sceny — po pierwszym renderze i w czasie bezczynności. */
+  /*
+   * Decyzja o włączeniu sceny. Kolejność ma znaczenie dla wydajności:
+   * najpierw odrzucamy urządzenia i łącza, na których paczka WebGL się nie
+   * zwraca, a dopiero potem czekamy na `load` i bezczynność. Dzięki temu
+   * pobieranie i kompilacja Three.js nigdy nie nakładają się na hydratację —
+   * to właśnie ta nakładka windowała Total Blocking Time na telefonach.
+   */
   useEffect(() => {
-    if (prefersReducedMotion() || !supportsWebGL()) return;
+    if (prefersReducedMotion() || !shouldRenderScene() || !supportsWebGL()) return;
+
+    let idleHandle: number | undefined;
+    let cancelled = false;
 
     const schedule =
-      window.requestIdleCallback ?? ((cb: IdleRequestCallback) => window.setTimeout(() => cb({
-        didTimeout: false,
-        timeRemaining: () => 0,
-      }), 260));
+      window.requestIdleCallback ??
+      ((cb: IdleRequestCallback) =>
+        window.setTimeout(() => cb({ didTimeout: false, timeRemaining: () => 0 }), 260));
 
-    const handle = schedule(() => {
-      setQuality(detectQuality());
-      setEnabled(true);
-    }, { timeout: 1800 });
+    const start = () => {
+      if (cancelled) return;
+      idleHandle = schedule(() => {
+        if (cancelled) return;
+        setQuality(detectQuality());
+        setEnabled(true);
+      }, { timeout: 2500 }) as number;
+    };
+
+    if (document.readyState === 'complete') start();
+    else window.addEventListener('load', start, { once: true });
 
     return () => {
-      if (window.cancelIdleCallback) window.cancelIdleCallback(handle as number);
-      else window.clearTimeout(handle as number);
+      cancelled = true;
+      window.removeEventListener('load', start);
+      if (idleHandle === undefined) return;
+      if (window.cancelIdleCallback) window.cancelIdleCallback(idleHandle);
+      else window.clearTimeout(idleHandle);
     };
   }, []);
 

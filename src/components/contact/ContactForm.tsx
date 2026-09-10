@@ -1,12 +1,16 @@
 'use client';
 
 import { useId, useRef, useState, type FormEvent } from 'react';
-import {
-  budgets,
-  contactSchema,
-  projectTypes,
-  type ContactResponse,
-} from '@/lib/contact-schema';
+import { budgets, projectTypes, type ContactResponse } from '@/lib/contact-options';
+
+/**
+ * Schemat walidacji ładowany dynamicznie. Zod waży ~360 kB nieskompresowany
+ * i jest potrzebny dopiero przy wysyłce, więc nie ma go w paczce startowej.
+ * Rozgrzewamy import przy pierwszym kliknięciu w pole — zanim ktokolwiek
+ * zdąży wypełnić formularz, moduł jest już w pamięci.
+ */
+let schemaPromise: Promise<typeof import('@/lib/contact-schema')> | null = null;
+const loadSchema = () => (schemaPromise ??= import('@/lib/contact-schema'));
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
@@ -36,6 +40,7 @@ export default function ContactForm() {
     };
 
     // Walidacja po stronie klienta tym samym schematem, którego używa serwer.
+    const { contactSchema } = await loadSchema();
     const parsed = contactSchema.safeParse(payload);
     if (!parsed.success) {
       const nextErrors: Record<string, string> = {};
@@ -105,7 +110,13 @@ export default function ContactForm() {
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} noValidate className="space-y-7">
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit}
+      onFocusCapture={() => void loadSchema()}
+      noValidate
+      className="space-y-7"
+    >
       {/* Pole-pułapka na boty — ukryte przed użytkownikiem i czytnikami ekranu */}
       <div aria-hidden className="absolute h-0 w-0 overflow-hidden opacity-0">
         <label htmlFor={fieldId('company')}>Nazwa firmy (nie wypełniaj)</label>

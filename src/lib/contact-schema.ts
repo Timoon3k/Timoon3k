@@ -1,26 +1,12 @@
 import { z } from 'zod';
-
-export const projectTypes = [
-  'Strona wizytówka',
-  'Rozbudowany serwis firmowy',
-  'Sklep internetowy / rezerwacje',
-  'Rozwiązanie dedykowane',
-  'Przebudowa istniejącej strony',
-  'SEO i wydajność',
-  'Jeszcze nie wiem',
-] as const;
-
-export const budgets = [
-  'do 2 000 zł',
-  '2 000 – 5 000 zł',
-  '5 000 – 10 000 zł',
-  'powyżej 10 000 zł',
-  'do ustalenia',
-] as const;
+import { budgets, projectTypes } from '@/lib/contact-options';
 
 /**
  * Jedno źródło reguł walidacji — ten sam schemat działa w przeglądarce
  * i w handlerze API, więc nie da się ich rozjechać.
+ *
+ * W przeglądarce ładowany dynamicznie (patrz `ContactForm`), żeby Zod nie
+ * trafiał do paczki startowej. Na serwerze importowany normalnie.
  */
 export const contactSchema = z.object({
   name: z
@@ -53,6 +39,5 @@ export const contactSchema = z.object({
 export type ContactInput = z.input<typeof contactSchema>;
 export type ContactData = z.output<typeof contactSchema>;
 
-export type ContactResponse =
-  | { ok: true }
-  | { ok: false; message: string; errors?: Record<string, string> };
+export { budgets, projectTypes } from '@/lib/contact-options';
+export type { ContactResponse } from '@/lib/contact-options';
