@@ -24,7 +24,9 @@ export default function SelectedWork({ projects }: { projects: Project[] }) {
 
         <div className="mt-14">
           {projects.map((project, index) => (
-            <ProjectRow key={project.slug} project={project} index={index} priority={index === 0} />
+            // Realizacje leżą daleko poniżej pierwszego ekranu — każda okładka
+            // ładuje się leniwie, żeby nie rywalizowała o pasmo z treścią hero.
+            <ProjectRow key={project.slug} project={project} index={index} />
           ))}
         </div>
       </div>
