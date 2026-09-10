@@ -9,7 +9,7 @@ import { buildMetadata } from '@/lib/seo';
 import { site } from '@/lib/site';
 
 export const metadata: Metadata = buildMetadata({
-  title: 'O mnie — Tomasz Majewski, web developer z Wołomina',
+  title: 'O mnie — web developer i projektant stron z Wołomina',
   description:
     'Freelancer z Wołomina projektujący i kodujący strony internetowe. Jak pracuję, w czym się specjalizuję i dlaczego zaczynam każdy projekt od celu, a nie od layoutu.',
   path: '/o-mnie',

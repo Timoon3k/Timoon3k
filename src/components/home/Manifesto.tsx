@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Section } from '@/components/ui/Section';
 
 const marquee = [
@@ -32,6 +33,17 @@ export default function Manifesto() {
             <p data-reveal className="mt-6 text-dim">
               Pracujesz bezpośrednio ze mną: tą samą osobą, która projektuje, pisze kod i wdraża.
               Bez pośredników i bez przekazywania projektu między działami.
+            </p>
+            <p data-reveal className="mt-6 text-dim">
+              Najwięcej projektów prowadzę dla firm z Mazowsza — osobne strony opisują{' '}
+              <Link href="/tworzenie-stron-internetowych-wolomin" className="link-underline text-signal">
+                strony internetowe w Wołominie
+              </Link>{' '}
+              i{' '}
+              <Link href="/tworzenie-stron-internetowych-warszawa" className="link-underline text-signal">
+                projektowanie stron dla firm z Warszawy
+              </Link>
+              . Resztę kraju obsługuję zdalnie.
             </p>
           </div>
         </div>

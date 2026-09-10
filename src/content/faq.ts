@@ -40,51 +40,81 @@ export const generalFaq: Faq[] = [
 
 export const wolominFaq: Faq[] = [
   {
-    question: 'Czy możemy spotkać się osobiście w Wołominie?',
+    question: 'Ile kosztuje strona internetowa w Wołominie?',
     answer:
-      'Tak. Mieszkam i pracuję w Wołominie, więc spotkanie na miejscu albo w okolicy — Kobyłka, Zielonka, Ząbki, Radzymin, Marki — nie jest problemem. Część klientów woli omówić projekt przy stole, zwłaszcza na starcie.',
+      'Prosta strona wizytówka dla lokalnej firmy zaczyna się od 1500 zł. Rozbudowany serwis z ofertą podzieloną na podstrony i blogiem to koszt od 3500 zł, a sklep lub system rezerwacji — od 5000 zł. Cena nie zależy od tego, gdzie działa firma, tylko od zakresu prac. Konkretną wycenę odsyłam zwykle w ciągu 24 godzin od rozmowy.',
   },
   {
-    question: 'Czy strona pomoże mi być widocznym w wyszukiwarce lokalnie?',
+    question: 'Czy możemy spotkać się osobiście?',
     answer:
-      'To jeden z głównych celów takiego projektu. Buduję strukturę pod frazy łączące usługę z lokalizacją, przygotowuję dane strukturalne opisujące firmę i obszar działania oraz porządkuję spójność informacji z wizytówką Google. To fundament — dalsza widoczność zależy też od opinii i konsekwencji w publikowaniu treści.',
+      'Tak. Mieszkam i pracuję w Wołominie, więc spotkanie na miejscu albo w okolicy — Kobyłka, Zielonka, Ząbki, Marki, Radzymin — nie jest problemem. Część klientów woli omówić projekt przy stole, zwłaszcza na starcie. Jeśli wolisz zdalnie, wideorozmowa działa równie dobrze.',
   },
   {
-    question: 'Prowadzę małą, jednoosobową firmę. Czy to nie za duży wydatek?',
+    question: 'Czy wykonujesz strony dla małych, lokalnych firm?',
     answer:
-      'Przy małej firmie sensowny start to zwykle strona wizytówka od 1500 zł. Zakres dobieramy tak, żeby pokryć to, co realnie przynosi zapytania, i zostawić przestrzeń na rozbudowę, gdy firma urośnie. Nie sprzedaję sklepu komuś, kto potrzebuje pięciu podstron.',
+      'To większość moich zleceń. Gabinety, warsztaty, serwisy z dojazdem, salony, jednoosobowe działalności. Przy takiej skali sensowny start to zwykle strona wizytówka — pokrywa to, co realnie przynosi telefony, i zostawia przestrzeń na rozbudowę, gdy firma urośnie. Nie sprzedaję sklepu komuś, kto potrzebuje pięciu podstron.',
   },
   {
-    question: 'Mam już stronę, ale wygląda przestarzale. Trzeba robić wszystko od nowa?',
+    question: 'Czy możesz poprawić moją obecną stronę zamiast robić nową?',
     answer:
-      'Nie zawsze. Czasem wystarczy nowy projekt graficzny i uporządkowanie treści na istniejącym systemie. Jeżeli jednak strona jest wolna, nieresponsywna albo zbudowana na porzuconym motywie, budowa od zera bywa tańsza niż łatanie. Mówię wprost, który wariant się opłaca.',
+      'Często tak. Jeżeli strona działa na aktualnym systemie i problemem jest wygląd albo uporządkowanie treści, przebudowa bywa tańsza niż budowa od zera. Jeżeli jest wolna, nieresponsywna albo stoi na porzuconym motywie, łatanie kosztuje więcej niż nowy projekt. Mówię wprost, który wariant się opłaca — po obejrzeniu strony, nie w ciemno.',
+  },
+  {
+    question: 'Czy pomagasz z domeną i hostingiem?',
+    answer:
+      'Tak. Doradzam w wyborze, konfiguruję domenę, hosting i certyfikat SSL, a przy przenosinach zajmuję się migracją bez przerwy w działaniu strony. Dostępy zostają Twoje — nie rejestruję domeny na siebie, bo to uzależniałoby Cię od jednego wykonawcy.',
+  },
+  {
+    question: 'Czy strona pomoże mi być widocznym w Google lokalnie?',
+    answer:
+      'To jeden z głównych celów takiego projektu. Buduję strukturę pod frazy łączące usługę z lokalizacją, przygotowuję dane strukturalne opisujące firmę i obszar działania oraz porządkuję spójność informacji z wizytówką Google. To fundament — dalsza widoczność zależy też od opinii i konsekwencji w publikowaniu treści. Nie obiecuję konkretnych pozycji, bo nikt uczciwie nie może.',
+  },
+  {
+    question: 'Jak długo trwa wykonanie strony?',
+    answer:
+      'Wizytówki i portfolia zamykam zwykle w 7–14 dni. Rozbudowane serwisy, sklepy i systemy rezerwacji zajmują od 14 do 30 dni, licząc od momentu otrzymania materiałów. Termin podaję przed startem razem z wyceną i jest wiążący.',
   },
 ];
 
 export const warszawaFaq: Faq[] = [
   {
-    question: 'Czym różni się Twoja oferta od agencji interaktywnej?',
+    question: 'Ile kosztuje stworzenie strony internetowej w Warszawie?',
     answer:
-      'Pracujesz bezpośrednio z osobą, która projektuje i pisze kod. Nie ma account managera pośredniczącego w ustaleniach ani narzutu na strukturę agencji. Przy dużych, wieloosobowych wdrożeniach agencja bywa lepszym wyborem — przy projektach do kilkudziesięciu podstron bezpośrednia współpraca jest zwykle szybsza i tańsza.',
+      'Strona wizytówka zaczyna się od 1500 zł, rozbudowany serwis firmowy od 3500 zł, a sklep internetowy lub system rezerwacji od 5000 zł. Przy projektach z nietypową logiką albo zaawansowaną warstwą wizualną wycena jest indywidualna. Nie doliczam narzutu za lokalizację klienta — płacisz za zakres prac, nie za adres.',
   },
   {
-    question: 'Czy realizujesz projekty z zaawansowaną warstwą wizualną?',
+    question: 'Ile trwa wykonanie strony internetowej?',
     answer:
-      'Tak — animacje sterowane przewijaniem, motion design, sceny 3D w Three.js i interfejsy budowane od zera w Next.js. Z zastrzeżeniem, że efekt wizualny nie może odbywać się kosztem szybkości. Ta strona jest przykładem takiego podejścia.',
+      'Prosta strona firmowa to 7–14 dni. Rozbudowany serwis, sklep WooCommerce albo wdrożenie z integracjami — od 14 do 30 dni. Największy wpływ na termin ma gotowość materiałów: teksty i zdjęcia po stronie klienta potrafią wydłużyć projekt bardziej niż sam kod.',
   },
   {
-    question: 'Obsługujesz sklepy internetowe?',
+    question: 'Czy tworzysz strony na WordPress?',
     answer:
-      'Tak, w oparciu o WooCommerce, także z niestandardową logiką zamówień, rezerwacjami terminów i integracją płatności. Przy sklepach rozszerzam system dedykowanym kodem, zamiast doklejać kolejne wtyczki, które spowalniają ścieżkę zakupową.',
+      'Tak — WordPress jest sensownym wyborem przy stronach firmowych, blogach i typowych sklepach na WooCommerce. Jest sprawdzony, tani w utrzymaniu i łatwy do samodzielnej edycji. Przy projektach, gdzie liczy się maksymalna wydajność albo nietypowa logika, proponuję rozwiązanie dedykowane w Next.js. Rekomendację przedstawiam po poznaniu celu, nie z góry.',
   },
   {
-    question: 'Czy spotykamy się na miejscu w Warszawie?',
+    question: 'Czy możesz przebudować istniejącą stronę?',
     answer:
-      'Warszawa jest tuż obok Wołomina, więc spotkanie osobiste jest możliwe. W praktyce większość projektów prowadzę zdalnie — wideorozmowa i wspólny dokument z ustaleniami działają szybciej niż dojazdy przez miasto.',
+      'Tak, i to częsty scenariusz w Warszawie: firma ma stronę sprzed kilku lat, która przestała odpowiadać poziomowi konkurencji. Zaczynam od przeglądu tego, co warto zachować — treść, adresy podstron, wypracowana widoczność w wyszukiwarce. Przebudowa bez planu przekierowań potrafi skasować pozycje wypracowane przez lata.',
   },
   {
-    question: 'Jak wygląda kwestia wydajności i Core Web Vitals?',
+    question: 'Czy strona będzie przygotowana pod SEO?',
     answer:
-      'Traktuję ją jako element zakresu, nie jako dodatek. Optymalizuję obrazy, ograniczam skrypty zewnętrzne, kontroluję to, co ładuje się przed pierwszym ekranem, i pilnuję stabilności układu. Wyniki pokazuję na realnych pomiarach po wdrożeniu.',
+      'SEO techniczne jest częścią zakresu, nie płatnym dodatkiem: struktura nagłówków, unikalne metadane, adresy kanoniczne, dane strukturalne, sitemapa, linkowanie wewnętrzne i optymalizacja Core Web Vitals. To fundament, na którym da się prowadzić dalsze działania — sam w sobie nie gwarantuje pozycji i nie zastępuje pracy nad treścią.',
+  },
+  {
+    question: 'Czy zajmujesz się również opieką nad stroną?',
+    answer:
+      'Tak, w formie stałej współpracy miesięcznej: aktualizacje, kopie zapasowe, monitoring dostępności i pula godzin na zmiany w treści. Nie jest to jednak warunek — możesz wziąć komplet dostępów i prowadzić stronę samodzielnie albo korzystać ze wsparcia doraźnie.',
+  },
+  {
+    question: 'Czym różni się praca z Tobą od agencji interaktywnej?',
+    answer:
+      'Pracujesz bezpośrednio z osobą, która projektuje i pisze kod. Nie ma opiekuna projektu pośredniczącego w ustaleniach ani narzutu na strukturę agencji. Przy dużych wdrożeniach wymagających kilku równoległych zespołów agencja będzie lepszym wyborem i powiem to wprost — przy projektach do kilkudziesięciu podstron bezpośrednia współpraca jest zwykle szybsza i tańsza.',
+  },
+  {
+    question: 'Czy realizujesz sklepy internetowe?',
+    answer:
+      'Tak, w oparciu o WooCommerce — również z niestandardową logiką zamówień, rezerwacjami terminów i integracją płatności. Przy sklepach rozszerzam system dedykowanym kodem, zamiast doklejać kolejne wtyczki, bo każda z nich dokłada skryptów do ścieżki zakupowej i spowalnia checkout.',
   },
 ];

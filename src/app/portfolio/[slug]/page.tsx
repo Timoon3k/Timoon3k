@@ -282,6 +282,27 @@ export default async function CaseStudyPage({ params }: Params) {
         </section>
       ) : null}
 
+      {/* Kontekst usługowy — bez przypisywania klientowi lokalizacji, której nie potwierdziłem */}
+      <section className="border-t border-hairline py-14">
+        <div className="container-page">
+          <p data-reveal className="max-w-3xl text-dim">
+            Realizuję podobne wdrożenia dla firm z całej Polski. Osobno opisałem{' '}
+            <Link href="/tworzenie-stron-internetowych-wolomin" className="link-underline text-signal">
+              lokalne tworzenie stron WWW w Wołominie
+            </Link>{' '}
+            oraz{' '}
+            <Link href="/tworzenie-stron-internetowych-warszawa" className="link-underline text-signal">
+              ofertę dla Warszawy
+            </Link>
+            . Pełny zakres znajdziesz w{' '}
+            <Link href="/oferta" className="link-underline text-signal">
+              ofercie
+            </Link>
+            .
+          </p>
+        </div>
+      </section>
+
       <ContactCta
         title="Podobny projekt u Ciebie?"
         lead="Opisz, co ma robić Twoja strona. Odeślę propozycję zakresu, termin i wycenę."

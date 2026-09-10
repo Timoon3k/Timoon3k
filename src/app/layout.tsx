@@ -39,7 +39,7 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Tworzenie stron internetowych — Wołomin i Warszawa | Tomasz Majewski',
+    default: 'Projektowanie i tworzenie stron internetowych | Tomasz Majewski',
     template: '%s | Tomasz Majewski',
   },
   description: site.shortDescription,

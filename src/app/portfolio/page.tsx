@@ -75,12 +75,20 @@ export default async function PortfolioPage() {
             ))}
           </div>
 
-          <p data-reveal className="mt-14 text-dim">
+          <p data-reveal className="mt-14 max-w-3xl text-dim">
             Interesuje Cię konkretny typ projektu? Zobacz{' '}
             <Link href="/oferta" className="link-underline text-signal">
               pełną ofertę
+            </Link>
+            , a jeśli szukasz wykonawcy w swojej okolicy —{' '}
+            <Link href="/tworzenie-stron-internetowych-wolomin" className="link-underline text-signal">
+              strony dla firm z Wołomina
             </Link>{' '}
-            albo napisz, co chcesz osiągnąć — dobiorę zakres do celu.
+            albo{' '}
+            <Link href="/tworzenie-stron-internetowych-warszawa" className="link-underline text-signal">
+              tworzenie stron WWW w Warszawie
+            </Link>
+            .
           </p>
         </div>
       </section>

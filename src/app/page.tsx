@@ -19,9 +19,9 @@ import {
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Tworzenie stron internetowych — Wołomin i Warszawa | Tomasz Majewski',
+  title: 'Projektowanie i tworzenie stron internetowych | Tomasz Majewski',
   description:
-    'Projektuję i koduję strony internetowe dla firm: wizytówki, serwisy firmowe, sklepy i systemy rezerwacji. Wołomin, Warszawa i cała Polska. Wycena w 24 h.',
+    'Projektuję i koduję strony internetowe dla firm: wizytówki, serwisy firmowe, sklepy i systemy rezerwacji. Indywidualny projekt, SEO i wysoka wydajność. Wycena w 24 h.',
   path: '/',
 });
 

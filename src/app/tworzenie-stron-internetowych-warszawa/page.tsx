@@ -10,9 +10,9 @@ import { getFaq, getProjects } from '@/lib/content';
 import { buildMetadata, serviceSchema } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Tworzenie stron internetowych — Warszawa | Tomasz Majewski',
+  title: 'Tworzenie stron internetowych Warszawa',
   description:
-    'Strony internetowe i sklepy dla firm z Warszawy: rozwiązania dedykowane, WooCommerce, Next.js, wysokie Core Web Vitals. Praca bezpośrednio z wykonawcą, bez narzutu agencji.',
+    'Projektuję szybkie i nowoczesne strony internetowe dla firm z Warszawy. Indywidualny design, SEO, WordPress i WooCommerce oraz rozwiązania dopasowane do biznesu.',
   path: '/tworzenie-stron-internetowych-warszawa',
   ogImage: '/og/warszawa.png',
 });
@@ -42,6 +42,39 @@ const comparison = [
     aspect: 'Tempo zmian',
     freelancer: 'Poprawka wchodzi tego samego dnia',
     agency: 'Zmiana przechodzi przez kolejkę zadań',
+  },
+];
+
+const projectTypes = [
+  {
+    name: 'Serwis firmowy',
+    body: 'Rozbudowana oferta podzielona na osobne podstrony, portfolio i blog. Architektura informacji projektowana pod frazy sprzedażowe, z myślą o rozbudowie treści przez kolejne miesiące.',
+    stack: 'WordPress lub Next.js',
+  },
+  {
+    name: 'Sklep WooCommerce',
+    body: 'Proces zakupowy, płatności i logika zamówień. Tam, gdzie standardowy sklep nie wystarcza — własne pola, walidacja warunków oferty i rezerwacje terminów pisane kodem, nie wtyczkami.',
+    stack: 'WordPress + WooCommerce',
+  },
+  {
+    name: 'Strona marki i portfolio',
+    body: 'Projekty, w których warstwa wizualna jest argumentem sprzedażowym: fotografowie, studia, marki premium. Animacje sterowane przewijaniem i sceny 3D jako część architektury, nie doklejka.',
+    stack: 'Next.js, GSAP, Three.js',
+  },
+  {
+    name: 'Przebudowa istniejącego serwisu',
+    body: 'Redesign z zachowaniem wypracowanej widoczności: przegląd adresów, plan przekierowań i migracja treści. Przebudowa bez tego planu potrafi skasować pozycje budowane latami.',
+    stack: 'zależnie od obecnego systemu',
+  },
+  {
+    name: 'Rozwiązanie dedykowane',
+    body: 'Konfiguratory, panele, aplikacje webowe i integracje z zewnętrznymi systemami. Wtedy, gdy gotowy system jest ograniczeniem, a nie oszczędnością.',
+    stack: 'Next.js, TypeScript, API',
+  },
+  {
+    name: 'Audyt i optymalizacja',
+    body: 'Strona istnieje, ale jest wolna albo nie przynosi zapytań. Audyt techniczny, poprawa Core Web Vitals, uporządkowanie struktury nagłówków i danych strukturalnych.',
+    stack: 'niezależnie od technologii',
   },
 ];
 
@@ -97,8 +130,8 @@ export default async function WarszawaPage() {
 
       <section className="container-page pt-14 pb-20 md:pt-20">
         <Eyebrow>Warszawa</Eyebrow>
-        <h1 data-split="immediate" className="mt-7 max-w-[16ch] text-giant text-gradient-star">
-          Strony dla firm z rynku, na którym wszyscy się starają
+        <h1 data-split="immediate" className="mt-7 max-w-[18ch] text-giant text-gradient-star">
+          Tworzenie stron internetowych w Warszawie, które pracują na Twój biznes
         </h1>
         <div className="mt-10 grid gap-8 md:grid-cols-12">
           <p data-reveal className="text-lead text-dim md:col-span-6">
@@ -107,9 +140,10 @@ export default async function WarszawaPage() {
             wykonania i to, jak szybko odwiedzający rozumie, dlaczego ma wybrać właśnie Ciebie.
           </p>
           <p data-reveal className="text-dim md:col-span-5 md:col-start-8">
-            Pracuję z firmami usługowymi, sklepami, markami i freelancerami, którzy oczekują
-            wykonania na poziomie agencyjnym, ale wolą rozmawiać bezpośrednio z osobą, która
-            projektuje i pisze kod.
+            Tworzenie stron internetowych i sklepów to moja jedyna specjalizacja od strony projektu
+            i od strony kodu. Pracuję z firmami usługowymi, sklepami, markami i freelancerami,
+            którzy oczekują wykonania na poziomie agencyjnym, ale wolą rozmawiać bezpośrednio
+            z osobą, która projektuje i pisze kod.
           </p>
         </div>
       </section>
@@ -224,6 +258,65 @@ export default async function WarszawaPage() {
               Po wdrożeniu dostajesz komplet dostępów i panel do samodzielnej edycji. Możesz zostać
               przy stałej opiece albo prowadzić stronę we własnym zakresie — obie ścieżki są w
               porządku, żadna nie jest warunkiem drugiej.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Typy projektów */}
+      <section className="border-t border-hairline py-section">
+        <div className="container-page">
+          <SectionHeader
+            eyebrow="Rodzaje projektów"
+            title="Z czym najczęściej przychodzą firmy z Warszawy"
+            lead="Sześć typów wdrożeń, które realizuję. W praktyce projekt rzadko mieści się dokładnie w jednym — zwykle łączymy elementy kilku."
+          />
+          <div data-reveal-group className="mt-16 grid gap-px md:grid-cols-2 lg:grid-cols-3">
+            {projectTypes.map((type) => (
+              <article key={type.name} data-reveal className="border-t border-hairline py-8 md:pr-8">
+                <h3 className="font-display text-[1.125rem] font-semibold tracking-tight text-star">
+                  {type.name}
+                </h3>
+                <p className="mt-4 text-sm leading-relaxed text-dim">{type.body}</p>
+                <p className="mt-6 font-mono text-[0.625rem] tracking-[0.12em] text-faint uppercase">
+                  {type.stack}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO i szybkość */}
+      <section className="border-t border-hairline py-section">
+        <div className="container-page grid gap-12 md:grid-cols-12">
+          <div className="md:col-span-4 lg:col-span-3">
+            <div className="md:sticky md:top-32">
+              <Eyebrow>SEO i szybkość</Eyebrow>
+              <h2 data-split className="mt-6 text-major text-gradient-star">
+                Dlaczego to jedna rozmowa, nie dwie
+              </h2>
+            </div>
+          </div>
+          <div data-reveal-group className="space-y-7 md:col-span-8 lg:col-span-8 lg:col-start-5">
+            <p data-reveal className="text-lead leading-relaxed text-dim">
+              W Warszawie o te same frazy walczy zwykle kilkanaście firm z porównywalną ofertą.
+              Przy tak wyrównanej stawce o kolejności decydują sygnały, których klient nie widzi
+              wprost: czas do pierwszego sensownego widoku, stabilność układu podczas wczytywania
+              i to, czy wyszukiwarka rozumie strukturę strony.
+            </p>
+            <p data-reveal className="text-lead leading-relaxed text-dim">
+              Dlatego SEO techniczne i wydajność są u mnie jednym zakresem prac. Struktura
+              nagłówków, unikalne metadane, adresy kanoniczne, dane strukturalne, sitemapa
+              i linkowanie wewnętrzne powstają razem z serwisem. Optymalizacja obrazów, kontrola
+              tego, co ładuje się przed pierwszym ekranem, i eliminacja zbędnych skryptów
+              zewnętrznych są częścią budowy, nie osobną usługą sprzedawaną po odbiorze.
+            </p>
+            <p data-reveal className="text-lead leading-relaxed text-dim">
+              Wyniki pokazuję na pomiarach z realnych wizyt po wdrożeniu, nie na wykresie
+              z laboratorium. Nie obiecuję konkretnych pozycji w Google — nikt uczciwie nie
+              może tego zagwarantować. Odpowiadam za to, żeby strona nie przegrywała
+              z konkurencją na rzeczach, które są w pełni pod kontrolą wykonawcy.
             </p>
           </div>
         </div>

@@ -11,9 +11,9 @@ import { buildMetadata, serviceSchema } from '@/lib/seo';
 import { formatPrice } from '@/lib/format';
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Tworzenie stron internetowych — Wołomin | Tomasz Majewski',
+  title: 'Tworzenie stron internetowych Wołomin',
   description:
-    'Strony internetowe dla firm z Wołomina i powiatu wołomińskiego. Bezpośrednia współpraca z wykonawcą, możliwość spotkania na miejscu, strony od 1500 zł.',
+    'Tworzę nowoczesne strony internetowe dla firm z Wołomina i okolic. Lokalna współpraca, indywidualny projekt, SEO i wysoka wydajność. Strony od 1500 zł.',
   path: '/tworzenie-stron-internetowych-wolomin',
   ogImage: '/og/wolomin.png',
 });
@@ -31,6 +31,44 @@ const towns = [
   'Dąbrówka',
   'Jadów',
   'Strachówka',
+];
+
+const siteTypes = [
+  {
+    name: 'Strona wizytówka',
+    price: 'od 1500 zł',
+    body: 'Kilka podstron, czytelna oferta i widoczny kontakt. Najczęstszy wybór jednoosobowej działalności i małej firmy usługowej, która wchodzi do sieci pierwszy raz.',
+    fit: 'Gabinet, warsztat, usługi z dojazdem',
+  },
+  {
+    name: 'Rozbudowany serwis firmowy',
+    price: 'od 3500 zł',
+    body: 'Oferta podzielona na osobne podstrony, portfolio realizacji i blog. Struktura przygotowana pod frazy sprzedażowe i rozbudowę treści w kolejnych miesiącach.',
+    fit: 'Firma z szerszą ofertą, kilka usług',
+  },
+  {
+    name: 'Sklep i rezerwacje',
+    price: 'od 5000 zł',
+    body: 'Sprzedaż online albo zapisy na terminy z płatnością. Buduję to na WooCommerce rozszerzonym dedykowanym kodem, nie na stosie wtyczek.',
+    fit: 'Handel, zajęcia, usługi na termin',
+  },
+  {
+    name: 'Przebudowa istniejącej strony',
+    price: 'wycena indywidualna',
+    body: 'Nowy projekt graficzny i uporządkowanie treści na tym, co już masz — albo budowa od zera, jeśli obecna strona jest wolna i nieresponsywna. Mówię, który wariant się opłaca.',
+    fit: 'Strona sprzed kilku lat',
+  },
+];
+
+const included = [
+  'Indywidualny projekt graficzny — nie gotowy motyw z marketplace',
+  'Poprawne wyświetlanie na telefonie, tablecie i komputerze',
+  'Panel do samodzielnej edycji treści wraz z krótkim szkoleniem',
+  'SEO techniczne: struktura nagłówków, metadane, dane strukturalne, sitemapa',
+  'Konfiguracja domeny, hostingu i certyfikatu SSL',
+  'Formularz kontaktowy z zabezpieczeniem przed spamem',
+  'Optymalizacja szybkości ładowania i stabilności układu',
+  'Komplet dostępów po zakończeniu — strona jest Twoja',
 ];
 
 const localCases = [
@@ -81,8 +119,8 @@ export default async function WolominPage() {
 
       <section className="container-page pt-14 pb-20 md:pt-20">
         <Eyebrow>Wołomin i powiat wołomiński</Eyebrow>
-        <h1 data-split="immediate" className="mt-7 max-w-[15ch] text-giant text-gradient-star">
-          Strona internetowa dla firmy z Wołomina
+        <h1 data-split="immediate" className="mt-7 max-w-[17ch] text-giant text-gradient-star">
+          Tworzenie stron internetowych w Wołominie dla firm, które chcą rosnąć
         </h1>
         <div className="mt-10 grid gap-8 md:grid-cols-12">
           <p data-reveal className="text-lead text-dim md:col-span-6">
@@ -91,9 +129,10 @@ export default async function WolominPage() {
             o co dokładnie chodzi.
           </p>
           <p data-reveal className="text-dim md:col-span-5 md:col-start-8">
-            Robię strony, które mają przynieść lokalnemu biznesowi konkretne telefony i zapytania:
-            widoczne w Google na frazy z okolicy, szybkie na telefonie i na tyle proste w obsłudze,
-            żebyś sam zmienił godziny otwarcia czy cennik.
+            Tworzenie stron internetowych to moje jedyne zajęcie — nie łączę go z reklamą,
+            grafiką ani prowadzeniem social mediów. Robię strony, które mają przynieść lokalnemu
+            biznesowi konkretne telefony i zapytania: widoczne w Google na frazy z okolicy, szybkie
+            na telefonie i na tyle proste w obsłudze, żebyś sam zmienił godziny otwarcia czy cennik.
           </p>
         </div>
 
@@ -220,6 +259,65 @@ export default async function WolominPage() {
                 className="border border-hairline px-4 py-2.5 font-mono text-[0.6875rem] tracking-[0.1em] text-dim uppercase"
               >
                 {town}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Rodzaje stron */}
+      <section className="border-t border-hairline py-section">
+        <div className="container-page">
+          <SectionHeader
+            eyebrow="Rodzaje stron"
+            title="Cztery warianty, z których zwykle wybieramy"
+            lead="Zakres dobieramy do tego, co strona ma robić, a nie do maksymalnego budżetu. Podane kwoty to punkty startowe dla typowego zakresu."
+          />
+          <div data-reveal-group className="mt-16 grid gap-px sm:grid-cols-2">
+            {siteTypes.map((type) => (
+              <article key={type.name} data-reveal className="border-t border-hairline py-8 sm:pr-10">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+                  <h3 className="font-display text-headline font-semibold tracking-tight text-star">
+                    {type.name}
+                  </h3>
+                  <span className="font-mono text-[0.6875rem] tracking-[0.1em] text-signal uppercase">
+                    {type.price}
+                  </span>
+                </div>
+                <p className="mt-4 max-w-md leading-relaxed text-dim">{type.body}</p>
+                <p className="mt-5 font-mono text-[0.625rem] tracking-[0.12em] text-faint uppercase">
+                  {type.fit}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Zakres każdego projektu */}
+      <section className="border-t border-hairline py-section">
+        <div className="container-page grid gap-12 md:grid-cols-12">
+          <div className="md:col-span-4">
+            <div className="md:sticky md:top-32">
+              <Eyebrow>Co dostajesz</Eyebrow>
+              <h2 data-split className="mt-6 text-major text-gradient-star">
+                Standard w każdym projekcie
+              </h2>
+              <p data-reveal className="mt-6 max-w-sm text-dim">
+                Niezależnie od tego, czy robimy wizytówkę za 1500 zł, czy sklep — poniższe
+                elementy wchodzą w zakres i nie są dopłatą.
+              </p>
+            </div>
+          </div>
+          <ul data-reveal-group className="md:col-span-7 md:col-start-6">
+            {included.map((item) => (
+              <li
+                key={item}
+                data-reveal
+                className="flex gap-5 border-b border-hairline py-4 leading-relaxed text-dim"
+              >
+                <span aria-hidden className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-signal" />
+                {item}
               </li>
             ))}
           </ul>

@@ -54,7 +54,9 @@ Najdroższa strona to ta, którą trzeba zrobić dwa razy.
 
 ## Jak przygotować się do wyceny
 
-Zbierz trzy informacje: kto ma trafiać na stronę, jaką decyzję ma podjąć i co konkretnie ma się na niej znaleźć. Z tym da się przygotować konkretną wycenę zamiast przedziału „od–do”, który nie mówi nic.`,
+Zbierz trzy informacje: kto ma trafiać na stronę, jaką decyzję ma podjąć i co konkretnie ma się na niej znaleźć. Z tym da się przygotować konkretną wycenę zamiast przedziału „od–do”, który nie mówi nic.
+
+Rozpisałem też zakres osobno dla dwóch rynków, na których pracuję najczęściej: [strony internetowe dla firm z Warszawy](/tworzenie-stron-internetowych-warszawa) oraz [strony dla lokalnych firm z Wołomina](/tworzenie-stron-internetowych-wolomin).`,
   },
   {
     slug: 'core-web-vitals-w-praktyce',
@@ -177,7 +179,9 @@ Liczba, świeżość i treść opinii wpływają zarówno na pozycję w mapkach,
 
 ## Realistyczne oczekiwania
 
-Lokalne SEO to nie kampania na miesiąc. Pierwsze zmiany w widoczności zwykle widać po kilku tygodniach od uporządkowania podstaw, a stabilna pozycja buduje się miesiącami. Za to w przeciwieństwie do reklamy efekt nie znika w dniu, w którym przestajesz płacić.`,
+Lokalne SEO to nie kampania na miesiąc. Pierwsze zmiany w widoczności zwykle widać po kilku tygodniach od uporządkowania podstaw, a stabilna pozycja buduje się miesiącami. Za to w przeciwieństwie do reklamy efekt nie znika w dniu, w którym przestajesz płacić.
+
+Jeżeli prowadzisz firmę w okolicy, opisałem osobno, jak wygląda [tworzenie stron internetowych w Wołominie](/tworzenie-stron-internetowych-wolomin) — z naciskiem na widoczność lokalną i bezpośrednią współpracę.`,
   },
   {
     slug: 'wordpress-czy-next-js',
@@ -235,7 +239,9 @@ Zamiast pytać „co jest lepsze”, odpowiedz sobie na cztery pytania:
 
 ## Wniosek
 
-Nie ma jednej właściwej odpowiedzi. Jest natomiast zły sposób podejmowania tej decyzji: wybór technologii, zanim ktokolwiek ustali, co strona ma robić.`,
+Nie ma jednej właściwej odpowiedzi. Jest natomiast zły sposób podejmowania tej decyzji: wybór technologii, zanim ktokolwiek ustali, co strona ma robić.
+
+Przy projektach dla firm z Warszawy najczęściej rozmawiamy właśnie o tym kompromisie — opisałem to szerzej przy [projektowaniu stron WWW dla firm z Warszawy](/tworzenie-stron-internetowych-warszawa).`,
   },
 ];
 
