@@ -17,7 +17,7 @@ Three.js, motion designem w GSAP i treścią zarządzaną przez headless CMS.
 - [Zmienne środowiskowe](#zmienne-środowiskowe)
 - [Struktura projektu](#struktura-projektu)
 - [Mapa podstron](#mapa-podstron)
-- [CMS — Sanity](#cms--sanity)
+- [CMS — WordPress albo Sanity](#cms--wordpress-albo-sanity)
 - [Formularz kontaktowy](#formularz-kontaktowy)
 - [Warstwa 3D i animacje](#warstwa-3d-i-animacje)
 - [SEO](#seo)
@@ -79,11 +79,13 @@ Wszystkie zmienne opisuje `.env.example`. Do pracy lokalnej skopiuj go do
 | Zmienna | Wymagana | Opis |
 | --- | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | do wdrożenia | Adres kanoniczny, bez ukośnika na końcu. Używany w `canonical`, OG, sitemapie i JSON-LD. |
+| `CONTENT_SOURCE` | nie | `wordpress`, `sanity` albo `seed`. Puste = wykrywanie automatyczne. |
+| `WORDPRESS_API_URL` | do WordPressa | Adres REST API, np. `https://cms.example.pl/wp-json`. Nie jest sekretem. |
 | `NEXT_PUBLIC_SANITY_PROJECT_ID` | nie | Identyfikator projektu Sanity. Pusty = tryb treści startowej, Studio wyłączone. |
 | `NEXT_PUBLIC_SANITY_DATASET` | nie | Domyślnie `production`. |
 | `NEXT_PUBLIC_SANITY_API_VERSION` | nie | Data wersji API, domyślnie `2024-10-01`. |
 | `SANITY_API_READ_TOKEN` | nie | Token tylko do odczytu — wymagany wyłącznie dla prywatnego datasetu. |
-| `SANITY_REVALIDATE_SECRET` | nie | Sekret webhooka `/api/revalidate`. |
+| `CONTENT_REVALIDATE_SECRET` | nie | Sekret webhooka `/api/revalidate` — wspólny dla obu CMS-ów. Stara nazwa `SANITY_REVALIDATE_SECRET` nadal działa. |
 | `RESEND_API_KEY` | do wysyłki | Bez klucza formularz waliduje dane i loguje zgłoszenie zamiast je wysyłać. |
 | `CONTACT_EMAIL_TO` | do wysyłki | Adres odbiorcy zgłoszeń. |
 | `CONTACT_EMAIL_FROM` | do wysyłki | Nadawca zweryfikowany w Resend. |
@@ -99,7 +101,7 @@ src/
 │   ├── layout.tsx              # powłoka, fonty, globalne JSON-LD
 │   ├── page.tsx                # strona główna
 │   ├── api/contact/            # obsługa formularza (walidacja + Resend)
-│   ├── api/revalidate/         # webhook odświeżający cache z Sanity
+│   ├── api/revalidate/         # webhook odświeżający cache (WordPress i Sanity)
 │   ├── studio/[[...tool]]/     # osadzone Sanity Studio
 │   ├── sitemap.ts, robots.ts   # generowane dynamicznie
 │   └── …                       # pozostałe podstrony
@@ -113,6 +115,9 @@ src/
 │   ├── seo/                    # wstrzykiwanie JSON-LD
 │   └── ui/                     # prymitywy: CTA, sekcje, FAQ, breadcrumbs
 ├── content/                    # treść startowa (fallback dla trybu bez CMS)
+├── lib/
+│   ├── content.ts              # jedno źródło treści — wybiera CMS albo seed
+│   └── wordpress/              # klient REST, mapery, konwerter HTML→markdown
 ├── lib/                        # typy, SEO, formatowanie, dostęp do treści
 └── sanity/                     # klient, zapytania GROQ, schematy, struktura
 scripts/                        # generatory grafik i ikon
@@ -135,9 +140,42 @@ scripts/                        # generatory grafik i ikon
 | `/polityka-prywatnosci` | Dokument prawny |
 | `/studio` | Sanity Studio (tylko przy skonfigurowanym CMS) |
 
-## CMS — Sanity
+## CMS — WordPress albo Sanity
 
-### Konfiguracja
+Warstwa treści ma jeden szew: `src/lib/content.ts`. Komponenty nie wiedzą,
+skąd pochodzą dane, więc zmiana CMS-a nie dotyka ani jednego widoku.
+Zmienna `CONTENT_SOURCE` wybiera źródło:
+
+| Wartość | Znaczenie |
+| --- | --- |
+| `wordpress` | WordPress headless przez REST (`WORDPRESS_API_URL`) |
+| `sanity` | Sanity ze Studiem pod `/studio` |
+| `seed` | wyłącznie treść wbudowana w `src/content` |
+| puste | wykrywanie: WordPress → Sanity → treść startowa |
+
+Niezależnie od wyboru: gdy CMS nie odpowie albo zwróci pustą kolekcję,
+strona pokazuje treść startową i zapisuje powód w logach builda. Awaria
+hostingu CMS-a nie kładzie witryny.
+
+### WordPress
+
+Instalacja krok po kroku, opis wszystkich pól i rozwiązywanie problemów:
+**[`wordpress/README.md`](wordpress/README.md)**.
+
+W skrócie: wgrywasz `wordpress/majewski-content.php` do `wp-content/mu-plugins/`,
+a w `.env.production` ustawiasz `CONTENT_SOURCE=wordpress` i `WORDPRESS_API_URL`.
+Wtyczka mu rejestruje typy treści (Realizacje, Usługi, FAQ, Opinie) i wystawia
+je pod `/wp-json/majewski/v1/…` w kształcie, którego oczekuje frontend —
+niezależnie od tego, czy pola wprowadzasz przez ACF, Meta Box czy Pods.
+
+Blog korzysta ze zwykłych Wpisów WordPressa. HTML z edytora jest zamieniany
+na wąski markdown i renderowany jako elementy Reacta, więc treść z CMS-u
+nigdy nie trafia do DOM jako HTML — `<script>` w treści nie wykona się,
+a odnośnik `javascript:` zostaje samym tekstem. Pilnują tego testy (`npm test`).
+
+### Sanity
+
+#### Konfiguracja
 
 1. Załóż projekt na [sanity.io/manage](https://www.sanity.io/manage).
 2. Uzupełnij `NEXT_PUBLIC_SANITY_PROJECT_ID` i `NEXT_PUBLIC_SANITY_DATASET`.
@@ -145,7 +183,7 @@ scripts/                        # generatory grafik i ikon
    z zaznaczoną opcją *Allow credentials*.
 4. Uruchom aplikację i wejdź na `/studio`.
 
-### Co da się edytować bez dotykania kodu
+#### Co da się edytować bez dotykania kodu
 
 - **Ustawienia witryny** — nazwa, e-mail, telefon, profile społecznościowe,
   domyślne SEO i domyślne CTA
@@ -160,21 +198,26 @@ scripts/                        # generatory grafik i ikon
 Każdy typ treści ma pole **SEO** (title, meta description, grafika Open Graph,
 przełącznik `noindex`).
 
-### Odświeżanie treści
+### Odświeżanie treści po publikacji
 
 Dane są cache'owane na 5 minut i otagowane jako `content`. Aby publikacja
 w CMS-ie odświeżała stronę natychmiast, dodaj w Sanity webhook:
 
 ```
-POST https://twoja-domena.pl/api/revalidate?secret=SANITY_REVALIDATE_SECRET
+# Sanity → API → Webhooks
+POST https://twoja-domena.pl/api/revalidate?secret=CONTENT_REVALIDATE_SECRET
+
+# WordPress — wtyczka mu robi to sama po ustawieniu w wp-config.php:
+#   define('MJ_REVALIDATE_URL',    'https://twoja-domena.pl/api/revalidate');
+#   define('MJ_REVALIDATE_SECRET', '…');
 ```
 
 ### Tryb bez CMS-u
 
-Bez `NEXT_PUBLIC_SANITY_PROJECT_ID` aplikacja korzysta z treści w
-`src/content` (realizacje, usługi, wpisy, FAQ). Ta sama treść jest awaryjnym
-źródłem, gdy zapytanie do Sanity zawiedzie — witryna nigdy nie wyświetli
-pustej strony z powodu niedostępności CMS-u.
+Bez skonfigurowanego źródła aplikacja korzysta z treści w `src/content`
+(realizacje, usługi, wpisy, FAQ). Ta sama treść jest awaryjnym źródłem, gdy
+zapytanie do CMS-u zawiedzie — witryna nigdy nie wyświetli pustej strony
+z powodu niedostępności CMS-u.
 
 ## Formularz kontaktowy
 
@@ -304,6 +347,7 @@ i Galeria) podmieniają się automatycznie.
 | `npm start` | Serwer produkcyjny (po `build`) |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | TypeScript bez emisji plików |
+| `npm test` | Testy jednostkowe warstwy treści (wbudowany runner Node) |
 
 ## Wdrożenie produkcyjne
 

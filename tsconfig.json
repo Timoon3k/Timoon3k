@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    /* Rozszerzenie .ts w importach — wymagane przez `node --test`,
+       które uruchamia pliki TypeScriptu bez etapu kompilacji. */
+    "allowImportingTsExtensions": true,
     "target": "ES2022",
     "lib": [
       "dom",
