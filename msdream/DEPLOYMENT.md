@@ -73,13 +73,51 @@ Dodatkowo:
 
 ## 3. Wdrożenie witryny (Vercel)
 
-### 3.1. Podłączenie repozytorium
+### 3.1. Jedno repozytorium, dwa projekty Vercela
 
-1. Vercel → **Add New → Project** → wskaż repozytorium.
-2. **Root Directory:** ustaw na **`msdream`** ← *to jest kluczowe; aplikacja
-   leży w podkatalogu repozytorium*.
+> **To jest najczęstsza przyczyna nieudanego wdrożenia — przeczytaj, zanim
+> zaczniesz klikać.**
+
+Repozytorium zawiera **dwie niezależne aplikacje**:
+
+| Katalog | Aplikacja |
+| --- | --- |
+| `/` (korzeń) | portfolio majewskitomasz.pl |
+| `/msdream` | witryna MSdream |
+
+Każda potrzebuje **własnego projektu na Vercelu**, różniącego się wyłącznie
+ustawieniem **Root Directory**.
+
+**Czego NIE robić:** nie przestawiaj Root Directory w istniejącym projekcie
+portfolio na `msdream` — portfolio przestanie się wtedy wdrażać. Utwórz
+**drugi, osobny projekt**.
+
+#### Nowy projekt dla MSdream
+
+1. Vercel → **Add New → Project** → wskaż to samo repozytorium.
+2. **Root Directory → Edit → wybierz `msdream`** ← *krok, którego pominięcie
+   powoduje błąd builda*.
 3. Framework preset: **Next.js** (wykryje się sam).
-4. Build command i output: **zostaw domyślne**.
+4. Build command, install command i output: **zostaw domyślne**.
+5. Production Branch: ustaw na gałąź, z której chcesz wdrażać.
+
+#### Dlaczego pominięcie Root Directory kończy się błędem
+
+Gdy Root Directory zostanie na korzeniu, Vercel buduje projekt portfolio.
+Jego `tsconfig.json` obejmował kiedyś **wszystkie** pliki `.ts` w repozytorium,
+łącznie z `msdream/src/**` — i sprawdzał je aliasem `@/*` wskazującym na
+`src/` **portfolio**, a nie MSdream. Efekt to lawina błędów w rodzaju:
+
+```
+msdream/src/content/services.ts: error TS2305:
+  Module '"@/lib/types"' has no exported member 'Service'.
+```
+
+Katalog `msdream/` jest już wykluczony w korzeniowym `tsconfig.json`
+i `eslint.config.mjs`, więc **taki błąd nie powinien się powtórzyć**.
+Jeśli jednak zobaczysz w logu ścieżki zaczynające się od `msdream/`,
+to nieomylny znak, że budowany jest korzeń zamiast podkatalogu —
+popraw Root Directory, nie kod.
 
 ### 3.2. Zmienne środowiskowe
 
