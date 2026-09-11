@@ -3,14 +3,7 @@ import typescriptConfig from 'eslint-config-next/typescript';
 
 /** Flat config — `eslint-config-next` udostępnia gotowe zestawy dla ESLint 9. */
 const eslintConfig = [
-  {
-    /**
-     * `msdream/` to osobna aplikacja z własnym package.json, tsconfigiem
-     * i konfiguracją ESLint-a. Lintujemy ją jej własnymi regułami
-     * (`cd msdream && npm run lint`), nie regułami portfolio.
-     */
-    ignores: ['.next/**', 'node_modules/**', 'next-env.d.ts', 'public/**', 'msdream/**'],
-  },
+  { ignores: ['.next/**', 'node_modules/**', 'next-env.d.ts', 'public/**'] },
   ...coreWebVitals,
   ...typescriptConfig,
   {
